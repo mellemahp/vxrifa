@@ -1,3 +1,6 @@
+### FORK DETAILS
+This fork is me trying to get this working as a bazel project so I can test its use with another bazel project.
+
 ## Vert.X RIFA - Rich Interfaces For Actors 
 This library introduces concept of asynchronous object-oriented programming 'by contract' in Vert.X.<br>
 Usually if you want to send message in Vert.X from one Actor(Verticle) to other you need to use <tt>eventBus.send</tt> or <tt>eventBus.publish</tt> with some object as payload.
