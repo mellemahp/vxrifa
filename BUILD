@@ -9,5 +9,6 @@ java_library(
         "@vxrifaMaven//:io_vertx_vertx_core",
         "@vxrifaMaven//:io_vertx_vertx_unit",
         "@vxrifaMaven//:com_squareup_javapoet",
-    ]
+    ],
+    visibility = ["//visibility:public"]
 )
