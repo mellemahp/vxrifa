@@ -18,6 +18,7 @@
  */
 package io.github.nsforth.vxrifa;
 
+import io.github.nsforth.vxrifa.message.RIFAMessage;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.MessageConsumer;
 import io.vertx.core.streams.ReadStream;

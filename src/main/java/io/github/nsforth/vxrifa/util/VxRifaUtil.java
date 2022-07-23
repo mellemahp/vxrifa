@@ -18,6 +18,11 @@
  */
 package io.github.nsforth.vxrifa;
 
+import io.github.nsforth.vxrifa.annotations.VxRifa;
+import io.github.nsforth.vxrifa.message.RIFAMessage;
+import io.github.nsforth.vxrifa.message.RIFAMessageCodec;
+import io.github.nsforth.vxrifa.message.RIFAReply;
+import io.github.nsforth.vxrifa.message.RIFAReplyCodec;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
@@ -28,6 +33,9 @@ import java.lang.reflect.InvocationTargetException;
  * @author Nikita Staroverov
  */
 public class VxRifaUtil {
+    private VxRifaUtil() {
+        throw new UnsupportedOperationException("Class cannot be instantiated");
+    }
     
     /**
      * Should be called once per Vertx instance before use other methods from {@link VxRifaUtil}

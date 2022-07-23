@@ -27,9 +27,11 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
+import io.github.nsforth.vxrifa.annotations.VxRifa;
+import io.github.nsforth.vxrifa.message.RIFAMessage;
+import io.github.nsforth.vxrifa.message.RIFAReply;
 import io.vertx.core.Promise;
 
-import java.text.MessageFormat;
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;

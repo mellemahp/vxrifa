@@ -47,3 +47,12 @@ hs_err_pid*
 .gradle/
 .nb-gradle/
 
+# ignore bazel build files
+/bazel-*
+/dist
+
+# ignore bazel project files
+/.ijwb
+
+# ignore idea project files
+/.idea

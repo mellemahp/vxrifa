@@ -18,12 +18,12 @@
  */
 package io.github.nsforth.vxrifa;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.text.MessageFormat;
+import io.github.nsforth.vxrifa.message.RIFAMessage;
+
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;

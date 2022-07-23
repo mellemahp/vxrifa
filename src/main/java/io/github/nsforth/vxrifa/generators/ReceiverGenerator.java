@@ -27,12 +27,17 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
+import io.github.nsforth.vxrifa.annotations.VxRifa;
+import io.github.nsforth.vxrifa.annotations.VxRifaIgnore;
+import io.github.nsforth.vxrifa.annotations.VxRifaPublish;
+import io.github.nsforth.vxrifa.message.RIFAMessage;
+import io.github.nsforth.vxrifa.message.RIFAReply;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.eventbus.MessageConsumer;
-import java.text.MessageFormat;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Messager;

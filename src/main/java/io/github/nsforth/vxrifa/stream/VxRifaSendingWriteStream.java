@@ -18,7 +18,10 @@
  */
 package io.github.nsforth.vxrifa;
 
+import io.github.nsforth.vxrifa.message.RIFAMessage;
+import io.github.nsforth.vxrifa.message.RIFAReply;
 import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.DeliveryOptions;
@@ -70,28 +73,28 @@ public class VxRifaSendingWriteStream<T> implements WriteStream<T> {
     }
 
     @Override
-    public WriteStream<T> write(T data) {
+    public Future<Void> write(T data) {
         checkDataAddress();
         sentCounter++;
         vertx.eventBus().send(dataAddress, RIFAMessage.of("Data", data));
-        return this;
+        return null;
     }
 
     @Override
-    public WriteStream<T> write(T data, Handler<AsyncResult<Void>> handler) {
+    public void write(T data, Handler<AsyncResult<Void>> handler) {
         checkDataAddress();
         sentCounter++;
         vertx.eventBus().request(dataAddress, RIFAMessage.of("Data", data), (e) -> {
             handler.handle(null);
         });
-        return this;
     }
     
     @Override
-    public void end() {
+    public Future<Void> end() {
         checkDataAddress();
         controlConsumer.unregister();
         vertx.eventBus().send(dataAddress, RIFAMessage.of("End"));
+        return null;
     }
 
     @Override
@@ -134,20 +137,18 @@ public class VxRifaSendingWriteStream<T> implements WriteStream<T> {
     
     private void receiveControlMessage(RIFAMessage rifaMessage) {
         String messageType = rifaMessage.getSuffix();
-        switch (messageType) {
-            case "Ack":
-                boolean wasFull = writeQueueFull();
-                this.ackCounter = (long) rifaMessage.getParameter(0);
-                boolean nowFull = writeQueueFull();
-                if (wasFull && !nowFull) {
-                    if (this.drainHandler != null) {
-                        this.drainHandler.handle(null);
-                    }
+        if ("Ack".equals(messageType)) {
+            boolean wasFull = writeQueueFull();
+            this.ackCounter = (long) rifaMessage.getParameter(0);
+            boolean nowFull = writeQueueFull();
+            if (wasFull && !nowFull) {
+                if (this.drainHandler == null) {
+                    return;
                 }
-                break;
-            case "Exception":
-                closeExceptionally((Throwable) rifaMessage.getParameter(0));                
-                break;
+                this.drainHandler.handle(null);
+            }
+        } else if ("Exception".equals(messageType)) {
+            closeExceptionally((Throwable) rifaMessage.getParameter(0));
         }
     }
     
