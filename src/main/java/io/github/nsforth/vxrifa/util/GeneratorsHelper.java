@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.util;
 
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -32,9 +32,9 @@ import javax.lang.model.element.TypeElement;
  *
  * @author Nikita Staroverov
  */
-class GeneratorsHelper {
+public class GeneratorsHelper {
     
-    static boolean isElementSuitableMethod(Element enclosedElement) {
+    public static boolean isElementSuitableMethod(Element enclosedElement) {
         
         if (enclosedElement.getKind() == ElementKind.METHOD) {
 
@@ -50,7 +50,7 @@ class GeneratorsHelper {
         
     }
     
-    static TypeSpec.Builder generateClass(TypeElement interfaceElement, String suffix) {
+    public static TypeSpec.Builder generateClass(TypeElement interfaceElement, String suffix) {
         
         return TypeSpec.classBuilder(String.format("%s%s", interfaceElement.getSimpleName(), suffix))
                 .addModifiers(Modifier.PUBLIC)

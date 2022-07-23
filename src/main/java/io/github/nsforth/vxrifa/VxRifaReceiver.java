@@ -18,6 +18,8 @@
  */
 package io.github.nsforth.vxrifa;
 
+import io.github.nsforth.vxrifa.annotations.VxRifa;
+import io.github.nsforth.vxrifa.annotations.VxRifaPublish;
 import io.vertx.core.Future;
 
 /**

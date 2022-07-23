@@ -16,13 +16,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.generators;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.github.nsforth.vxrifa.message.RIFAMessage;
+import io.github.nsforth.vxrifa.util.GeneratorsHelper;
+import io.github.nsforth.vxrifa.util.MethodsHelper;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
@@ -38,9 +40,9 @@ import javax.tools.Diagnostic;
  *
  * @author Nikita Staroverov
  */
-class PublisherGenerator {
+public class PublisherGenerator {
 
-    static final String VXRIFA_PUBLISHER_SUFFIX = "VxRifaPublisher";
+    public static final String VXRIFA_PUBLISHER_SUFFIX = "VxRifaPublisher";
 
     private final Messager messager;
     private final TypeElement interfaceElement;
@@ -51,13 +53,13 @@ class PublisherGenerator {
 
     private TypeSpec.Builder tsb;
 
-    PublisherGenerator(Messager messager, TypeElement interfaceElement, Elements elements) {
+    public PublisherGenerator(Messager messager, TypeElement interfaceElement, Elements elements) {
         this.messager = messager;
         this.interfaceElement = interfaceElement;
         this.elements = elements;
     }
 
-    PublisherGenerator generateInitializing() {
+    public PublisherGenerator generateInitializing() {
 
         tsb = GeneratorsHelper.generateClass(interfaceElement, VXRIFA_PUBLISHER_SUFFIX);
 
@@ -94,7 +96,7 @@ class PublisherGenerator {
 
     }
 
-    PublisherGenerator generateMethods() {
+    public PublisherGenerator generateMethods() {
 
         for (Element enclosedElement : elements.getAllMembers(interfaceElement)) {
 
@@ -117,7 +119,7 @@ class PublisherGenerator {
 
                 MethodsHelper methodsHelper = new MethodsHelper(method);
 
-                methodsHelper.getParameters().forEach(param -> methodBuilder.addParameter(param));
+                methodsHelper.getParameters().forEach(methodBuilder::addParameter);
 
                 if (methodsHelper.getParameters().isEmpty()) {
                     methodBuilder.addStatement("this.$N.eventBus().publish($N, $T.of($S, null))", vertxField, eventBusAddressField, RIFAMessage.class, methodsHelper.generateEventBusSuffix());
@@ -137,7 +139,7 @@ class PublisherGenerator {
 
     }
 
-    TypeSpec buildClass() {
+    public TypeSpec buildClass() {
 
         return tsb.build();
 

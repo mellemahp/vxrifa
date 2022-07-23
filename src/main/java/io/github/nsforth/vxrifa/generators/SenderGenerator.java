@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.generators;
 
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -27,9 +27,13 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
+import io.github.nsforth.vxrifa.stream.VxRifaReceivingReadStream;
+import io.github.nsforth.vxrifa.stream.VxRifaSendingWriteStream;
 import io.github.nsforth.vxrifa.annotations.VxRifa;
 import io.github.nsforth.vxrifa.message.RIFAMessage;
 import io.github.nsforth.vxrifa.message.RIFAReply;
+import io.github.nsforth.vxrifa.util.GeneratorsHelper;
+import io.github.nsforth.vxrifa.util.MethodsHelper;
 import io.vertx.core.Promise;
 
 import javax.annotation.processing.Messager;
@@ -49,9 +53,9 @@ import javax.tools.Diagnostic;
  *
  * @author Nikita Staroverov
  */
-class SenderGenerator {
+public class SenderGenerator {
 
-    static final String VXRIFA_SENDER_SUFFIX = "VxRifaSender";
+    public static final String VXRIFA_SENDER_SUFFIX = "VxRifaSender";
 
     private final Messager messager;
     private final TypeElement interfaceElement;
@@ -62,13 +66,13 @@ class SenderGenerator {
 
     private TypeSpec.Builder classBuilder;
 
-    SenderGenerator(Messager messager, TypeElement interfaceElement, Elements elements) {
+    public SenderGenerator(Messager messager, TypeElement interfaceElement, Elements elements) {
         this.messager = messager;
         this.interfaceElement = interfaceElement;
         this.elements = elements;
     }
 
-    SenderGenerator generateInitializing() {
+    public SenderGenerator generateInitializing() {
 
         classBuilder = GeneratorsHelper.generateClass(interfaceElement, VXRIFA_SENDER_SUFFIX);
 
@@ -105,7 +109,7 @@ class SenderGenerator {
 
     }
 
-    SenderGenerator generateMethods() {
+    public SenderGenerator generateMethods() {
 
         for (Element enclosedElement : elements.getAllMembers(interfaceElement)) {
 
@@ -131,7 +135,7 @@ class SenderGenerator {
 
                 MethodsHelper methodsHelper = new MethodsHelper(method);
 
-                methodsHelper.getParameters().forEach(param -> methodBuilder.addParameter(param));
+                methodsHelper.getParameters().forEach(methodBuilder::addParameter);
 
                 if (returnType.getKind() == TypeKind.VOID) {
                     methodBuilder.addStatement("this.$N.eventBus().send($N, $T.of($S, $N))", vertxField, eventBusAddressField, RIFAMessage.class, methodsHelper.generateEventBusSuffix(), methodsHelper.getParamsNamesCommaSeparatedOrCastedNull());
@@ -165,7 +169,7 @@ class SenderGenerator {
 
     }
 
-    SenderGenerator generateHandler() {
+    public SenderGenerator generateHandler() {
 
         MethodSpec.Builder handlerBuilder = MethodSpec.methodBuilder("handle");
 
@@ -201,7 +205,7 @@ class SenderGenerator {
 
     }
 
-    TypeSpec buildClass() {
+    public TypeSpec buildClass() {
 
         return classBuilder.build();
 

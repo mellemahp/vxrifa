@@ -16,8 +16,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.util;
 
+import io.github.nsforth.vxrifa.generators.PublisherGenerator;
+import io.github.nsforth.vxrifa.generators.ReceiverGenerator;
+import io.github.nsforth.vxrifa.generators.SenderGenerator;
+import io.github.nsforth.vxrifa.VxRifaReceiver;
 import io.github.nsforth.vxrifa.annotations.VxRifa;
 import io.github.nsforth.vxrifa.message.RIFAMessage;
 import io.github.nsforth.vxrifa.message.RIFAMessageCodec;

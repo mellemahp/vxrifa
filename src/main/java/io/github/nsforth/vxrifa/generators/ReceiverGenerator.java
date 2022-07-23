@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.generators;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -27,11 +27,16 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
+import io.github.nsforth.vxrifa.VxRifaReceiver;
+import io.github.nsforth.vxrifa.stream.VxRifaReceivingWriteStream;
+import io.github.nsforth.vxrifa.stream.VxRifaSendingReadStream;
 import io.github.nsforth.vxrifa.annotations.VxRifa;
 import io.github.nsforth.vxrifa.annotations.VxRifaIgnore;
 import io.github.nsforth.vxrifa.annotations.VxRifaPublish;
 import io.github.nsforth.vxrifa.message.RIFAMessage;
 import io.github.nsforth.vxrifa.message.RIFAReply;
+import io.github.nsforth.vxrifa.util.GeneratorsHelper;
+import io.github.nsforth.vxrifa.util.MethodsHelper;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Promise;
@@ -56,9 +61,9 @@ import javax.lang.model.util.Elements;
  *
  * @author Nikita Staroverov
  */
-class ReceiverGenerator {
+public class ReceiverGenerator {
 
-    static final String VXRIFA_RECEIVER_SUFFIX = "VxRifaReceiver";
+    public static final String VXRIFA_RECEIVER_SUFFIX = "VxRifaReceiver";
 
     private final Messager messager;
     private final TypeElement interfaceElement;
@@ -70,13 +75,13 @@ class ReceiverGenerator {
     private FieldSpec consumerField;
     private TypeSpec.Builder tsb;
 
-    ReceiverGenerator(Messager messager, TypeElement interfaceElement, Elements elements) {
+    public ReceiverGenerator(Messager messager, TypeElement interfaceElement, Elements elements) {
         this.messager = messager;
         this.interfaceElement = interfaceElement;
         this.elements = elements;
     }
 
-    ReceiverGenerator generateInitializing() {
+    public ReceiverGenerator generateInitializing() {
 
         tsb = GeneratorsHelper.generateClass(interfaceElement, VXRIFA_RECEIVER_SUFFIX);
 
@@ -120,7 +125,7 @@ class ReceiverGenerator {
 
     }
 
-    ReceiverGenerator generateRegisterMethod() {
+    public ReceiverGenerator generateRegisterMethod() {
 
         MethodSpec.Builder registerMB = MethodSpec.methodBuilder("registerReceiver");
 
@@ -178,7 +183,7 @@ class ReceiverGenerator {
 
     }
 
-    ReceiverGenerator generateUnregisterMethod() {
+    public ReceiverGenerator generateUnregisterMethod() {
 
         MethodSpec.Builder unregisterMB = MethodSpec.methodBuilder("unregisterReceiver");
 
@@ -266,7 +271,7 @@ class ReceiverGenerator {
 
     }
 
-    TypeSpec buildClass() {
+    public TypeSpec buildClass() {
 
         return tsb.build();
 

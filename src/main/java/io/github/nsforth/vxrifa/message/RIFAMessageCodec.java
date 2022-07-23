@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.message;
 
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;
@@ -25,7 +25,7 @@ import io.vertx.core.eventbus.MessageCodec;
  *
  * @author Nikita Staroverov
  */
-class RIFAMessageCodec implements MessageCodec<RIFAMessage, RIFAMessage>{
+public class RIFAMessageCodec implements MessageCodec<RIFAMessage, RIFAMessage>{
 
     @Override
     public void encodeToWire(Buffer buffer, RIFAMessage s) {

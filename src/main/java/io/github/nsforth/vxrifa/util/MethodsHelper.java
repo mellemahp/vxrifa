@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301  USA
  */
-package io.github.nsforth.vxrifa;
+package io.github.nsforth.vxrifa.util;
 
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -29,7 +29,7 @@ import javax.lang.model.element.VariableElement;
  *
  * @author Nikita Staroverov
  */
-class MethodsHelper {
+public class MethodsHelper {
 
     private final ExecutableElement method;
     private final List<ParameterSpec> parameters;
@@ -37,7 +37,7 @@ class MethodsHelper {
     private final String paramsTypesCommaSeparated;    
     private final String paramsTypesClassesCommaSeparated;
     
-    MethodsHelper(ExecutableElement method) {
+    public MethodsHelper(ExecutableElement method) {
 
         this.method = method;
         
@@ -79,19 +79,19 @@ class MethodsHelper {
 
     }
 
-    String generateEventBusSuffix() {
+    public String generateEventBusSuffix() {
         return String.format("%s(%s)", method.getSimpleName(), paramsTypesCommaSeparated);
     }
     
-    List<ParameterSpec> getParameters() {
+    public List<ParameterSpec> getParameters() {
         return parameters;
     }
     
-    String getParamsNamesCommaSeparated() {
+    public String getParamsNamesCommaSeparated() {
         return paramsNamesCommaSeparated;
     }
     
-    String getParamsNamesCommaSeparatedOrCastedNull() {
+    public String getParamsNamesCommaSeparatedOrCastedNull() {
         if (paramsNamesCommaSeparated.equals("")) {
             return "(Object[]) null";
         } else {
@@ -103,7 +103,7 @@ class MethodsHelper {
         return paramsTypesCommaSeparated;
     }
 
-    String getParamsTypesClassesCommaSeparated() {
+    public String getParamsTypesClassesCommaSeparated() {
         return paramsTypesClassesCommaSeparated;
     }
     

@@ -19,6 +19,13 @@
 package io.github.nsforth.vxrifa;
 
 import com.squareup.javapoet.JavaFile;
+import io.github.nsforth.vxrifa.annotations.VxRifa;
+import io.github.nsforth.vxrifa.annotations.VxRifaPublish;
+import io.github.nsforth.vxrifa.generators.PublisherGenerator;
+import io.github.nsforth.vxrifa.generators.ReceiverGenerator;
+import io.github.nsforth.vxrifa.generators.SenderGenerator;
+import io.github.nsforth.vxrifa.util.GeneratorsHelper;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -86,9 +93,8 @@ public class VxRifaAnnotationProcessor extends AbstractProcessor {
                 generateReceiver(interfaceElement, packageElement);            
 
             } catch (IOException ex) {
-                Logger.getLogger(VxRifaAnnotationProcessor.class.getName()).log(Level.SEVERE, null, ex); //TODO Заменить на консольный вывод ошибки компиляции
+                Logger.getLogger(VxRifaAnnotationProcessor.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
         
         for (Element element : publishers_elements) {
