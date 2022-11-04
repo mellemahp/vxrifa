@@ -30,21 +30,22 @@ rules_jvm_external_setup()
 
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 
-MAVEN_REPOS = ["https://repo1.maven.org/maven2"]
-
-
-###########################
-# Maven Dependencies
-###########################
+#####################
+# Java Dependencies #
+#####################
+load("//:dependencies.bzl", "JAVA_DEPENDENCIES", "MAVEN_REPOS")
 maven_install(
-    name = "vxrifaMaven",
-    artifacts = [
-        "io.vertx:vertx-core:4.2.1",
-        "io.vertx:vertx-unit:4.2.1",
-        "com.squareup:javapoet:1.13.0",
-        # test dependencies
-        "org.junit.jupiter:junit-jupiter-api:5.8.2",
-        "org.junit.jupiter:junit-jupiter-engine:5.8.2",
-    ],
+    name = "maven",
+    artifacts = JAVA_DEPENDENCIES,
+    repositories = MAVEN_REPOS,
+)
+
+#############
+# Test Deps #
+#############
+load("//:dependencies.bzl", "JAVA_TEST_DEPENDENCIES")
+maven_install(
+    name = "maven_test",
+    artifacts = JAVA_TEST_DEPENDENCIES,
     repositories = MAVEN_REPOS,
 )
